@@ -25,6 +25,16 @@ path = os.path.join(os.getcwd(),'dataprixnettoye.csv')
 download(ur1, path, replace=True)
 prix = pd.read_csv('./dataprixnettoye.csv')
 
+# Fonction
+def Distab(a,b):
+ '''Cette fonction permet de calculer la distance entre deux sorties données,
+     à partir du tableau des distances'''
+ return (Dist.iloc[a][b+1])
+
+def prixab(a,b):
+   '''Cette fonction permet de calculer le prix entre deux sorties données,
+    à partir du tableau des prix'''
+   return (prix.iloc[a][b+1])
 
 # Crée une liste qui contient le nom de toutes les villes
 villes = sorted(geo.NOMGARE.unique())
@@ -61,9 +71,9 @@ def itineraire(DEPART, ARRIVEE):
 
                 geometry = client.directions(coord)['routes'][0]['geometry']
                 decoded = convert.decode_polyline(geometry)
-                distance_txt = "<h4> <b>Distance :&nbsp" + "<strong>"+str(Dist.iloc[i][j+1])+" Km </strong>" +"</h4></b>"
-                prix_txt = "<h4> <b>Prix :&nbsp" + "<strong>"+str(prix.iloc[i][j+1])+" €. </strong>" +"</h4></b>"
-                prix_moy_txt = "<h4> <b>Prix Moyenne par KM :&nbsp" + "<strong>"+str(round(prix.iloc[i][j+1]/Dist.iloc[i][j+1],3))+" €. </strong>" +"</h4></b>"
+                distance_txt = "<h4> <b>Distance :&nbsp" + "<strong>"+str(Distab(i,j))+" Km </strong>" +"</h4></b>"
+                prix_txt = "<h4> <b>Prix :&nbsp" + "<strong>"+str(prixab(i,j))+" €. </strong>" +"</h4></b>"
+                prix_moy_txt = "<h4> <b>Prix Moyenne par KM :&nbsp" + "<strong>"+str(round(prixab(i,j)/Distab(i,j),3))+" €. </strong>" +"</h4></b>"
                 folium.GeoJson(decoded).add_child(folium.Popup(distance_txt+prix_txt+prix_moy_txt,max_width = 300)).add_to(m)
 
                 folium.Marker(
@@ -104,11 +114,11 @@ def itineraire(DEPART, ARRIVEE):
 
                 geometry = client.directions(coord)['routes'][0]['geometry']
                 decoded = convert.decode_polyline(geometry)
-                distance_txt = "<h4> <b>Distance :&nbsp" + "<strong>"+str(Dist.iloc[i][j+1])+" Km </strong>" +"</h4></b>"
-                prix_txt = "<h4> <b>Prix :&nbsp" + "<strong>"+str(prix.iloc[i][j+1])+" €. </strong>" +"</h4></b>"
-                prix_moy_txt = "<h4> <b>Prix Moyenne par KM :&nbsp" + "<strong>"+str(round(prix.iloc[i][j+1]/Dist.iloc[i][j+1],3))+" €. </strong>" +"</h4></b>"
+                distance_txt = "<h4> <b>Distance :&nbsp" + "<strong>"+str(Distab(i,j))+" Km </strong>" +"</h4></b>"
+                prix_txt = "<h4> <b>Prix :&nbsp" + "<strong>"+str(prixab(i,j))+" €. </strong>" +"</h4></b>"
+                prix_moy_txt = "<h4> <b>Prix Moyenne par KM :&nbsp" + "<strong>"+str(round(prixab(i,j)/Distab(i,j),3))+" €. </strong>" +"</h4></b>"
 
-                folium.GeoJson(decoded).add_child(folium.Popup(distance_txt,max_width = 300)).add_to(m)
+                folium.GeoJson(decoded).add_child(folium.Popup(distance_txt+prix_txt+prix_moy_txt,max_width = 300)).add_to(m)
 
                 folium.Marker(
                             coord[0][::-1],
