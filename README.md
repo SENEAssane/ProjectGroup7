@@ -18,6 +18,7 @@ Il permettra, entre autres de minimiser le coût du trajet en sortant et re-entr
 <p align="center">
   <img src="https://github.com/abderrahim-ait/ProjectGroup7/blob/main/Doc/source/carte.png" width="300" title="Autoroute">
 </p>
+
 ## Demo
 
 Pour tester le résultat final de notre projet, vous pouvez exécuter le fichier `Demo.py` qui se trouve à la racine de notre projet.
